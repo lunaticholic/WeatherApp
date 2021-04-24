@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { processFontFamily, useFonts } from 'expo-font';
 
 // 화면 배경색 지정을 위한 공간
 const weatherOptions = {
@@ -77,7 +78,7 @@ export default function Weather({ temp, condition }) {
                 <MaterialCommunityIcons name={weatherOptions[condition].iconName} size={96} color="#FFFFFF" />
                 <Text style={styles.temp}>{temp}°</Text> 
             </View>
-            <View style={{ ...styles.halfContainer, ...styles.textContainer }}>
+            <View style={styles.textContainer}>
                     <Text style={styles.title}>{weatherOptions[condition].title}</Text>
                     <Text style={styles.subtitle}>{weatherOptions[condition].subtitle}</Text>
             </View>
@@ -92,9 +93,7 @@ Weather.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        flex: 1
     },
     temp: {
         fontSize: 42,
@@ -109,15 +108,19 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 44,
         fontWeight: "300",
-        marginBottom: 10
+        marginBottom: 10,
+        textAlign: "left"
     },
     subtitle: {
         fontWeight: "600",
         color: "white",
-        fontSize: 24
+        fontSize: 24,
+        textAlign: "left"
     },
     textContainer: {
-        paddingHorizontal: 20,
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        paddingHorizontal: 40,
+        justifyContent: "center",
+        flex: 1
     }
 });
