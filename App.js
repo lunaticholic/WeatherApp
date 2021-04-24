@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import Loading from "./Loading"
 import * as Location from "expo-location";
 import axios from "axios";
+import Weather from './Weather';
 
 // openweathermap.org에서 회원 가입후 얻을 수 있는 API_KEY
 const API_KEY = "c34ed4970e3f2fcb73ff8eb278a2f93e";
@@ -12,11 +13,13 @@ export default class extends React.Component {
     isLoading: true
   }
   // 현재 위치를 가져올 함수
+  // 주소의 맨마지막 metric은 섭씨온도로 반환해주는 녀석
   getWeather = async (latitude, longitude) => {
     const { data } = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
     );
-    console.log(data);
+    // temp는 현재위치의 날씨 온도를 가져올거임
+    this.setState({ isLoading: false, temp: data.main.temp });
   }
   getLocation = async() => {
     try {
@@ -25,7 +28,7 @@ export default class extends React.Component {
       await Location.requestForegroundPermissionsAsync();
       
       // 위치 정보를 불러올 녀석
-      const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync();
+      const { coords: { latitude, longitude }, name } = await Location.getCurrentPositionAsync();
 
       // API로 보내서 날씨정보를 받아올거임
       this.getWeather(latitude, longitude)
@@ -38,7 +41,7 @@ export default class extends React.Component {
     this.getLocation();
   }
   render() {
-    const { isLoading } = this.state;
-    return isLoading ? <Loading /> : null;
+    const { isLoading, temp } = this.state;
+    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} />;
   }
 }
