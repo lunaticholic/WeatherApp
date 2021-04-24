@@ -10,7 +10,8 @@ export default function Weather({ temp }) {
 
 Weather.propTypes = {
     temp: PropTypes.number.isRequired,
-}
+    condition: PropTypes.oneOf(["Thunderstorm", "Drizzle", "Rain"," Snow", "Atmosphere", "Clear", "Clouds", "Haze", "Mist"]).isRequired
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -18,4 +19,4 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     }
-})
+});

@@ -15,11 +15,11 @@ export default class extends React.Component {
   // 현재 위치를 가져올 함수
   // 주소의 맨마지막 metric은 섭씨온도로 반환해주는 녀석
   getWeather = async (latitude, longitude) => {
-    const { data } = await axios.get(
+    const { data: { main: { temp } }, weather } = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
     );
     // temp는 현재위치의 날씨 온도를 가져올거임
-    this.setState({ isLoading: false, temp: data.main.temp });
+    this.setState({ isLoading: false, condition: weather[0].main, temp });
   }
   getLocation = async() => {
     try {
@@ -32,7 +32,6 @@ export default class extends React.Component {
 
       // API로 보내서 날씨정보를 받아올거임
       this.getWeather(latitude, longitude)
-      this.setState({ isLoading: false });
     } catch {
       Alert.alert("너의 위치를 찾을 수 없네..", "넘나 슬픈것")
     }
@@ -41,7 +40,7 @@ export default class extends React.Component {
     this.getLocation();
   }
   render() {
-    const { isLoading, temp } = this.state;
-    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} />;
+    const { isLoading, temp, condition } = this.state;
+    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />;
   }
 }
