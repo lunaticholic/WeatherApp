@@ -5,17 +5,23 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>너무나 신나고 재미있을 날씨앱 만들기 w/ Expo</Text>
-      <StatusBar style="auto" />
+      <View style={styles.yellowView} />
+      <View style={styles.blueView} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // Container에서 flex 1을 사용해야만 비로소 전체공간을 사용할 수 있다.
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
+  yellowView: {
+    flex: 1,
+    backgroundColor: "yellow"
+  },
+  blueView: {
+    flex: 1,
+    backgroundColor: "blue"
+  }
 });
