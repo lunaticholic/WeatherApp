@@ -15,7 +15,7 @@ export default class extends React.Component {
   // 현재 위치를 가져올 함수
   // 주소의 맨마지막 metric은 섭씨온도로 반환해주는 녀석
   getWeather = async (latitude, longitude) => {
-    const { data: { main: { temp } }, weather } = await axios.get(
+    const { data: { main: { temp }, weather  }} = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
     );
     // temp는 현재위치의 날씨 온도를 가져올거임
